@@ -4,27 +4,27 @@ Component({
   },
   data: {
     elements: [{
-        title: '宿舍公告',
-        name: 'notice',
+        title: '我的行程',
+        name: 'schedule',
         color: 'cyan',
         icon: 'newsfill'
       },
       {
-        title: '校园报修',
-        name: 'repair',
+        title: '场地预约',
+        name: 'order',
         color: 'blue',
         icon: 'colorlens'
       },
       {
-        title: '报修历史',
-        name: 'history',
+        title: '动态口令',
+        name: 'password',
         color: 'purple',
         icon: 'font'
       },
 
       {
-        title: '个人信息',
-        name: 'info',
+        title: '我的预约',
+        name: 'myorder',
         color: 'red',
         icon: 'myfill'
       }

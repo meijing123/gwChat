@@ -86,23 +86,38 @@ Page({
   },
 
   login:function(e){
-    if(this.data.account==123 && this.data.password==123){
-      wx.showToast({
-        title: '登录成功',
-      })
-      setTimeout(() => {
-        wx.redirectTo({
-          url: '/pages/basics/home/home',
-        })
-      }, 1000)
-      wx.setStorageSync('isLogin', true)
-     
-    }else{
-      wx.showModal({
-        title: '提示',
-        content: '未识别匹配的账号和密码',
-        showCancel: false
-      })
-    }
+    var that = this;
+    wx.request({
+      url: 'https://www.shutest.top/HXJD/WeChat/login',
+      data:{username:that.data.account,password:that.data.password},
+      dataType:'json',
+      method:'POST',
+      header:{'content-type':'application/x-www-form-urlencoded'},
+      success:function(res){
+        if(res.data.code == "ok"){
+          wx.showToast({
+            title: '登录成功',
+          })
+          setTimeout(() => {
+            wx.redirectTo({
+              url: '/pages/basics/home/home',
+            })
+          }, 1000)
+          wx.setStorageSync('isLogin', true)
+         
+        }else{
+          wx.showModal({
+            title: '提示',
+            content: '未识别匹配的账号和密码',
+            showCancel: false
+          })
+        }
+      },error:function(e){
+        console.log(e)
+      }
+      
+
+    })
+
   }
 })

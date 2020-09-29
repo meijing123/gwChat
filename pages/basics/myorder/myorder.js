@@ -72,7 +72,7 @@ Page({
         })
         setTimeout(() => {
           wx.redirectTo({//返回原网页
-            url: '../home/home',
+            url: '../index/index',
           })
         }, 1000)
           

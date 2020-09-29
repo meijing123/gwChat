@@ -1,18 +1,19 @@
 {
   "pages": [
     "pages/basics/home/home",
-    "pages/basics/history/history",
-    "pages/basics/notice/notice",
-    "pages/basics/repair/repair",
-    "pages/basics/info/info",
+    "pages/basics/schedule/schedule",
+    "pages/basics/order/order",
+    "pages/basics/password/password",
+    "pages/basics/myorder/myorder",
     "pages/login/login"
   ],
   "window": {
     "navigationBarBackgroundColor": "#39b54a",
-    "navigationBarTitleText": "Color UI",
+    "navigationBarTitleText": "华新基地",
     "navigationStyle": "custom",
     "navigationBarTextStyle": "white"
   },
+
   "usingComponents": {
     "cu-custom": "/colorui/components/cu-custom"
   },
