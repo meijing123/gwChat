@@ -1,0 +1,20 @@
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">报修历史</view>
+</cu-custom>
+<view class="cu-timeline">
+	<view class="cu-time">2020-3-1</view>
+	<view class="cu-item cur cuIcon-noticefill">
+		<view class="content bg-green shadow-blur">
+			<text>22:22</text><text class="text margin-left">水电</text>
+		</view>
+	</view>
+</view>
+<view class="cu-timeline" wx:for="{{history}}" wx:for-inde="idx" wx:for-item="item" data-idx="{{idx}}">
+	<view class="cu-time">{{item.date}}</view>
+	<view class="cu-item cur cuIcon-noticefill">
+		<view class="content bg-green shadow-blur">
+			<text>{{item.time}}</text><text class="text margin-left">{{item.lei}}</text>
+		</view>
+	</view>
+</view>

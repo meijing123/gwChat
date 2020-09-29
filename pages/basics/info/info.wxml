@@ -1,0 +1,64 @@
+<scroll-view>
+  <cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+    <view slot="backText">返回</view>
+    <view slot="content">信息列表</view>
+  </cu-custom>
+  <view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-orange "></text> 学生基本信息
+    </view> 
+  </view>  
+  <view class="cu-list menu {{menuBorder?'sm-border':''}} {{menuCard?'card-menu margin-top':''}}">
+    <view class="cu-item {{menuArrow?'arrow':''}}">
+          <view class="content">
+            <text class="cuIcon-profile text-grey"></text>
+            <text class="text-grey">张三</text>
+          </view>
+    </view>
+    <view class="cu-item {{menuArrow?'arrow':''}}">
+      <view class="content">
+        <text class="cuIcon-phone text-grey"></text>
+        <text class="text-grey">15790005800</text>
+      </view>
+    </view>
+      <view class="cu-item {{menuArrow?'arrow':''}}">
+      <view class="content">
+        <text class="cuIcon-location text-grey"></text>
+        <text class="text-grey">新校区南5</text>
+      </view>
+    </view>
+     <view class="cu-item {{menuArrow?'arrow':''}}">
+          <view class="content">
+            <text class="cuIcon-card text-grey"></text>
+            <text class="text-grey">123</text>
+          </view>
+    </view>
+   
+  </view>
+
+
+
+  <view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-orange "></text> 宿管信息
+    </view> 
+  </view>  
+  <view class="cu-list menu {{menuBorder?'sm-border':''}} {{menuCard?'card-menu margin-top':''}}">
+    <view class="cu-item {{menuArrow?'arrow':''}}">
+          <view class="content">
+            <text class="cuIcon-profile text-grey"></text>
+            <text class="text-grey">小芳</text>
+          </view>
+    </view>
+    <view class="cu-item {{menuArrow?'arrow':''}}">
+      <view class="content">
+        <text class="cuIcon-phone text-grey"></text>
+        <text class="text-grey">18001902302</text>
+      </view>
+    </view>
+    
+  </view>
+  <view class="cu-bar btn-group">
+    <button class="cu-btn bg-red shadow-blur round lg" bindtap='exit'>退出</button>
+  </view>
+</scroll-view>

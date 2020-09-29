@@ -1,0 +1,79 @@
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">校园报修</view>
+</cu-custom>
+<form>
+	<view class="cu-form-group margin-top">
+		<view class="title">学号</view>
+		<input bindinput="number" placeholder="请输入学号"></input>
+	</view>
+	<view class="cu-form-group">
+		<view class="title">姓名</view>
+		<input bindinput="name" placeholder="请输入姓名"></input>
+	</view>
+
+	<view class="cu-form-group">
+		<view class="title">楼层选择</view>
+		<picker bindchange="PickerChange" value="{{index}}" range="{{picker}}">
+			<view class="picker">
+				{{index?picker[index]:'楼层选择'}}
+			</view>
+		</picker>
+	</view>
+	<view class="cu-form-group">
+		<view class="title">宿舍号</view>
+		<input bindinput="room" placeholder="宿舍号"></input>
+	</view>
+	<view class="cu-form-group">
+		<view class="title">时间选择</view>
+		<picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="TimeChange">
+			<view class="picker">
+				{{time}}
+			</view>
+		</picker>
+	</view>
+	<view class="cu-form-group">
+		<view class="title">日期选择</view>
+		<picker mode="date" value="{{date}}" start="2015-09-01" end="2020-09-01" bindchange="DateChange">
+			<view class="picker">
+				{{date}}
+			</view>
+		</picker>
+	</view>
+	<view class="cu-form-group">
+		<view class="title">报修类别</view>
+		<picker bindchange="LeiChange" value="{{lei_index}}" range="{{lei}}">
+			<view class="picker">
+				{{lei_index?lei[lei_index]:'报修类别'}}
+			</view>
+		</picker>
+	</view>
+	<view class="cu-form-group">
+		<textarea maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaAInput" placeholder="请描述具体情况"></textarea>
+	</view>
+	<view class="cu-bar bg-white">
+		<view class="action">
+			图片上传
+		</view>
+		<view class="action">
+			{{imgList.length}}/4
+		</view>
+	</view>
+	<view class="cu-form-group">
+		<view class="grid col-4 grid-square flex-sub">
+			<view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
+				<image src='{{imgList[index]}}' mode='aspectFill'></image>
+				<view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+					<text class="cuIcon-close"></text>
+				</view>
+			</view>
+			<view class="solids" bindtap="ChooseImage" wx:if="{{imgList.length<4}}">
+				<text class="cuIcon-cameraadd"></text>
+			</view>
+		</view>
+	</view>
+	<!-- !!!!! placeholder 在ios表现有偏移 建议使用 第一种样式 -->
+	<view class="padding">
+		<button class="cu-btn block bg-blue margin-tb-sm lg" bindtap="submit">提交</button>
+	</view>
+</form>

@@ -1,0 +1,5 @@
+/* pages/info/info.wxss */
+
+.btn-group{
+  margin-top: 30rpx;
+}

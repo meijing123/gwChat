@@ -1,0 +1,57 @@
+
+
+
+.content {
+  margin-top: 80px;
+}
+
+.account {
+  display: flex;
+  flex-direction: row;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  width: 90%;
+  font-size: 30rpx;
+}
+/* .cu-bar {
+  margin-top: 40rpx
+} */
+.user {
+  margin-right: 30px;
+  font-weight: bold;
+}
+.num {
+  width:70%;
+  font-weight: bold;
+}
+
+.hr {
+  border: 1px solid #ccc;
+  opacity: 0.2;
+  width: 90%;
+  margin: 0 auto;
+  background-color: red;
+}
+
+.cu-btn .lg {
+ 
+  margin-top: 80px;
+ 
+}
+
+.register {
+  text-align: right;
+  margin: 0 auto 20rpx;
+  width: 480rpx;
+}
+
+.register text {
+  font-size: 26rpx;
+}
+
+.register navigator {
+  font-size: 30rpx;
+  color: #d91417;
+  display: inline-block;
+}

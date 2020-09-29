@@ -1,0 +1,49 @@
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">宿舍通告</view>
+</cu-custom>
+<scroll-view scroll-x class="bg-white nav text-center fixed" style="top:{{CustomBar}}px">
+	<view class="cu-item {{index==TabCur?'text-blue cur':''}}" wx:for="{{tabNav}}" wx:key bindtap='tabSelect' data-id="{{index}}">
+		{{tabNav[index]}}
+	</view>
+</scroll-view>
+<block wx:if="{{TabCur==0}}">
+	<view wx:for="{{feed}}" wx:for-index="idx" wx:for-item="item" data-idx="{{idx}}">
+		<view class="cu-bar bg-white solid-bottom margin-top">
+			<view class="action">
+				<text class="cuIcon-title text-blue"></text>{{item.title}}
+			</view>
+		</view>
+		<view class="padding bg-white">
+			<view class="flex flex-wrap">
+				<view class="feed-content">
+					<view class="answer-body">
+						<view>
+							<view class="answer-txt"><text space="ensp">{{item.content}}</text></view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</block>
+<block wx:if="{{TabCur==1}}">
+	<view wx:for="{{notice}}" wx:for-inde="idx" wx:for-item="item" data-idx="{{idx}}">
+		<view class="cu-bar bg-white solid-bottom margin-top">
+			<view class="action">
+				<text class="cuIcon-title text-blue"></text>{{item.title}}
+			</view>
+		</view>
+		<view class="padding bg-white">
+			<view class="flex flex-wrap">
+				<view class="feed-content">
+					<view class="answer-body">
+						<view>
+							<view class="answer-txt"><text space="ensp">{{item.content}}</text></view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</block>
