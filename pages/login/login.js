@@ -88,13 +88,17 @@ Page({
   login:function(e){
     var that = this;
     wx.request({
-      url: 'https://www.shutest.top/HXJD/WeChat/login',
+      url: 'http://localhost:8080/WeChat//login',
       data:{username:that.data.account,password:that.data.password},
       dataType:'json',
       method:'POST',
-      header:{'content-type':'application/x-www-form-urlencoded'},
+      header:getApp().globalData.header,
       success:function(res){
+
+        console.log(res.header)
         if(res.data.code == "ok"){
+          console.log(res.data)
+          getApp().globalData.header.Cookie = "JSESSIONID="+ res.data.sessionId;
           wx.showToast({
             title: '登录成功',
           })

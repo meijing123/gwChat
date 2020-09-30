@@ -20,6 +20,10 @@ App({
     })
   },
   globalData: {
+  header:{
+    "content-type": "application/x-www-form-urlencoded",
+      'Cookie': ''
+  },
     ColorList: [{
         title: '嫣红',
         name: 'red',
