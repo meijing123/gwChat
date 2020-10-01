@@ -88,7 +88,7 @@ Page({
   login:function(e){
     var that = this;
     wx.request({
-      url: 'http://localhost:8080/WeChat//login',
+      url: 'http://localhost:8080/WeChat/login',
       data:{username:that.data.account,password:that.data.password},
       dataType:'json',
       method:'POST',

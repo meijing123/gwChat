@@ -1,5 +1,5 @@
 //app.js
-App({
+App({ 
   onLaunch: function() {
     // if (wx.cloud) {
     //   wx.cloud.init({

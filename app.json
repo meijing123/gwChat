@@ -11,7 +11,10 @@
     "navigationBarBackgroundColor": "#39b54a",
     "navigationBarTitleText": "华新基地",
     "navigationStyle": "custom",
-    "navigationBarTextStyle": "white"
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle":"dark"
+
   },
 
   "usingComponents": {
