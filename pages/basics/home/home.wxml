@@ -9,7 +9,7 @@
     
   </view>
     <view class='nav-list' wx-if="{{!islg}}">  
-    <navigator open-type="navigate" hover-class='none' url="/pages/login/login" class="nav-li bg-{{item.color}}" wx:for="{{elements}}" wx:key>
+    <navigator open-type="navigate" hover-class='none' url="/pages/login/login" class="nav-li bg-{{item.color}}" wx:for="{{elements}}" wx:for-index="{{index}}" wx:key="index">
       <view class="nav-title">{{item.title}}</view>
       <view class="nav-name">{{item.name}}</view>
       <text class='cuIcon-{{item.icon}}'></text>
