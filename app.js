@@ -1,5 +1,40 @@
 //app.js
-App({ 
+App({   
+  login:function(account,pwd){
+  var that = this;
+  wx.request({
+    url: 'https://www.shutest.top/HXJD/WeChat/login',
+    data:{username:account,password:pwd},
+    dataType:'json',
+    method:'POST',
+    header:getApp().globalData.header,
+    success:function(res){
+
+      if(res.data.code == "ok"){
+      wx.setStorageSync('username', account)
+      wx.setStorageSync('password', pwd)
+        getApp().globalData.header.Cookie = "JSESSIONID="+ res.data.sessionId;
+        wx.showToast({
+          title: '登录成功',
+        })
+        wx.setStorageSync('isLogin', true)
+       
+      }else{
+        wx.showModal({
+          title: '提示',
+          content: '未识别匹配的账号和密码',
+          showCancel: false
+        })
+      }
+    },error:function(e){
+      console.log(e)
+    }
+    
+
+  })
+
+},
+
   onLaunch: function() {
     // if (wx.cloud) {
     //   wx.cloud.init({

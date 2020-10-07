@@ -26,7 +26,9 @@
 <view class="margin-top">
  <scroll-view class="scroll-view_H" scroll-x>
   <view class='list' style='width:{{ width }}rpx'>
-   <view bindtap="select" wx:for="{{ calendar }}" wx:for-item="item" wx:for-index="index" data-index="{{ index }}" class='listItem {{index==currentIndex? "current":""}}' wx:key='' data-date="{{ item.date}}">
+   <view bindtap="select" wx:for="{{ calendar }}" wx:for-item="item" wx:for-index="index" 
+	  data-index="{{ index }}" class='listItem {{index==currentIndex? "current":""}}'
+	  wx:key='index' data-date="{{ item.date}}">
     <text class='name'>{{ item.week }}</text>
     <text class='date'>{{ item.date }}</text>
    </view>
@@ -35,17 +37,17 @@
  </view>
 
   <view class='time1'>
-  <view wx:for="{{timeArr}}" wx:for-item="timeItem" wx:for-index="timeIndex" data-Tindex="{{timeIndex}}" data-time="{{timeItem.time}}" bindtap='selectTime' class='listItem {{ currentTime==timeIndex? "current":"" }}' wx:key=''>
+  <view wx:for="{{timeArr}}" wx:for-item="timeItem" wx:for-index="timeIndex"
+	 data-Tindex="{{timeIndex}}" data-time="{{timeItem.time}}" 
+	 bindtap='selectTime' class='listItem {{ currentTime==timeIndex? "current":"" }}'
+	 wx:key='timeIndex' wx:if="{{timeItem.flag == '1' && timeItem.chosen == '0'}}" >
    <text>{{timeItem.time}}</text>
    <text>{{timeItem.status}}</text>
   </view>
+
  </view>
 
 
-
-
-
-	
 	<view class="padding">
 		<button class="cu-btn block bg-blue margin-tb-sm lg" bindtap="submit">提交</button>
 	</view>

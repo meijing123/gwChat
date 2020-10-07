@@ -1,64 +1,50 @@
 <scroll-view>
-  <cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
-    <view slot="backText">返回</view>
-    <view slot="content">信息列表</view>
-  </cu-custom>
-  <view class="cu-bar bg-white solid-bottom margin-top">
-    <view class="action">
-      <text class="cuIcon-title text-orange "></text> 学生基本信息
-    </view> 
-  </view>  
-  <view class="cu-list menu {{menuBorder?'sm-border':''}} {{menuCard?'card-menu margin-top':''}}">
-    <view class="cu-item {{menuArrow?'arrow':''}}">
-          <view class="content">
-            <text class="cuIcon-profile text-grey"></text>
-            <text class="text-grey">张三</text>
-          </view>
-    </view>
-    <view class="cu-item {{menuArrow?'arrow':''}}">
-      <view class="content">
-        <text class="cuIcon-phone text-grey"></text>
-        <text class="text-grey">15790005800</text>
-      </view>
-    </view>
-      <view class="cu-item {{menuArrow?'arrow':''}}">
-      <view class="content">
-        <text class="cuIcon-location text-grey"></text>
-        <text class="text-grey">新校区南5</text>
-      </view>
-    </view>
-     <view class="cu-item {{menuArrow?'arrow':''}}">
-          <view class="content">
-            <text class="cuIcon-card text-grey"></text>
-            <text class="text-grey">123</text>
-          </view>
-    </view>
-   
-  </view>
+	<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+		<view slot="backText">返回</view>
+		<view slot="content">我的预约</view>
+	</cu-custom>
+	<form>
+		<view class="cu-form-group margin-top ">
+			<view class="title">场地选择</view>
+			<picker bindchange="placeChange" value="{{place_index}}" range="{{places}}" range-key="name">
+				<view class="picker">
+					{{place_index?places[place_index].name:'场地选择'}}
+				</view>
+			</picker>
+		</view>
+		<view class="cu-form-group">
+			<view class="title">日期选择</view>
+			<picker mode="date" value="{{date1}}"  bindchange="DateChange">
+				<view class="picker">
+					{{date1}}
+				</view>
+			</picker>
+		</view>
+	</form>
 
 
-
-  <view class="cu-bar bg-white solid-bottom margin-top">
-    <view class="action">
-      <text class="cuIcon-title text-orange "></text> 宿管信息
-    </view> 
-  </view>  
-  <view class="cu-list menu {{menuBorder?'sm-border':''}} {{menuCard?'card-menu margin-top':''}}">
-    <view class="cu-item {{menuArrow?'arrow':''}}">
-          <view class="content">
-            <text class="cuIcon-profile text-grey"></text>
-            <text class="text-grey">小芳</text>
-          </view>
-    </view>
-    <view class="cu-item {{menuArrow?'arrow':''}}">
-      <view class="content">
-        <text class="cuIcon-phone text-grey"></text>
-        <text class="text-grey">18001902302</text>
-      </view>
-    </view>
-    
-  </view>
-  <view class="cu-bar btn-group">
-    <button class="cu-btn bg-red shadow-blur round lg" bindtap='exit'>退出</button>
-  </view>
+	<view wx:for="{{bookRecorders}}" wx:for-item="recorder" wx:for-index="Index" data-index="{{Index}}" data-id="{{recorder.id}}" data-operator="{{recorder.operator}}" class='margin-top' wx:key='Index'>
+		<view class="cu-bar bg-white solid-bottom">
+			<view class="action">
+				<text class="title text-orange">{{recorder.name}}</text>
+			</view>
+			<view class="action">
+				<button class="cu-btn bg-red shadow" data-id="{{recorder.id}}" data-operator="{{recorder.operator}}"  data-index="{{Index}}" bindtap="del">取消</button>
+			</view>
+		</view>
+		<view class="bg-white padding">
+			<view class="cu-steps">
+				<view class="cu-item ">
+					<text class="cuIcon-usefullfill" ></text> {{recorder.date}}
+				</view>
+				<view class="cu-item">
+					<text class="cuIcon-usefullfill"></text> {{recorder.start_time+" "+"-"+" "+recorder.end_time}}
+				</view>
+	
+				<view class="cu-item">
+					<text class="cuIcon-usefullfill"></text> {{recorder.operator}}
+				</view>
+			</view>
+		</view>
+	</view>
 </scroll-view>

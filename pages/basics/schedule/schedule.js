@@ -1,8 +1,16 @@
-const app = getApp();
+
 Page({
   data: {
       date: "2020-09-01",
       textareaAValue: ''
+  },
+
+    onPullDownRefresh:function(){
+      var username = wx.getStorageSync('username');
+      var password = wx.getStorageSync('password');
+      getApp().login(username,password)
+      wx.stopPullDownRefresh()
+  
   },
     /**
    * 生命周期函数--监听页面加载
@@ -39,12 +47,7 @@ Page({
 
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
 
-  },
 
   /**
    * 页面上拉触底事件的处理函数
@@ -86,7 +89,7 @@ Page({
   },
   submit(e){
     wx.request({
-      url: 'http://localhost:8080/WeChat/saveSchedule',
+      url: 'https://www.shutest.top/HXJD/WeChat/saveSchedule',
       data:{date:this.data.date,text:this.data.textareaAValue},
       method:'POST',
       header:getApp().globalData.header,

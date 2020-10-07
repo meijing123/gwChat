@@ -4,9 +4,9 @@
 </cu-custom>
 <view class="content">
   <view class="account">
-    <view class="user">学号</view>
+    <view class="user">账号</view>
     <view class="num">
-      <input bindinput="accountInput" placeholder="请输入学号(Or Id Card.)" placeholder-style="color:#999999;" />
+      <input bindinput="accountInput" placeholder="请输入管理员账号" placeholder-style="color:#999999;" />
     </view>
   </view>
   <view class="hr"></view>

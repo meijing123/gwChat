@@ -33,7 +33,6 @@ Component({
   },
   methods: {
     islogin: function () {
-    console.log("登陆判断")
     var flag = false;
     if (wx.getStorageSync("isLogin")) {
     flag = true;

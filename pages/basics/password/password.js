@@ -9,6 +9,12 @@ Page({
     reason:'无',
     bz:'无'
   },
+  onPullDownRefresh:function(){
+    var username = wx.getStorageSync('username');
+    var password = wx.getStorageSync('password');
+    getApp().login(username,password);
+    wx.stopPullDownRefresh();
+  },
   onLoad:function(){
      this.changePassword();
      this.TodayDate();
@@ -65,7 +71,7 @@ submit(){
    })
  }else{
    wx.request({
-     url: 'http://localhost:8080/WeChat/saveCreatePassword',
+     url: 'https://www.shutest.top/HXJD/WeChat/saveCreatePassword',
      data:{
        password:this.data.password,
        usedate:this.data.date,
