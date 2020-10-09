@@ -95,7 +95,7 @@ Page({
       header:getApp().globalData.header,
       success:function(res){
 
-        console.log(res.header)
+       
         if(res.data.code == "ok"){
         wx.setStorageSync('username', that.data.account)
         wx.setStorageSync('password', that.data.password)

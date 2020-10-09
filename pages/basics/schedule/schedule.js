@@ -96,7 +96,7 @@ Page({
       dataType:'json',
       success:function(res){
   
-        console.log(res)
+        
         if(res.data.code == "login"){
           wx.showToast({
             title: '超时重新登录',

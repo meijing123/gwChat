@@ -103,7 +103,7 @@ Page({
      var that = this
     //为下半部分的点击事件 
     this.setData({
-     currentTime: event.currentTarget.dataset.tindex
+     currentTime: event.currentTarget.dataset.index
     });
     this.getSaveResult();
   },
@@ -129,7 +129,9 @@ Page({
         content:'确认预约该时间段!',
         success(res){
           if(res.confirm){
-          that.data.timeArr[that.data.currentTime].chosen = "1";
+          that.data.timeArr[that.data.currentTime].color = "bg-gray";
+          that.data.timeArr[that.data.currentTime].chosen = "disabled";
+
           that.setData({
             timeArr:that.data.timeArr
           }) 
@@ -260,11 +262,12 @@ Page({
           temp_booktime:res.data
         })
         for(var i = 0; i < res.data.length; i++){
-          var temp = {"time":"00-00","status":"不可预约","flag":"0","chosen":"0"}
-          temp.time = res.data[i].start_time+"-"+res.data[i].end_time
+          var temp = {"time":"00-00","status":"不可预约","flag":"0","chosen":"","color":"bg-blue"}
+          temp.time = res.data[i].start_time+" "+"-"+" "+res.data[i].end_time
           temp.status  = "可预约"
           temp.flag = "1"
-          temp.chosen = "0"
+          temp.chosen = ""
+          temp.color = "bg-blue"
           temp1.push(temp)
          }
         
@@ -283,73 +286,88 @@ Page({
     var temp = this.data.result
  
     for(var i = 0; i<temp.length; i++){
-      var temp1 = {"time":"00-00","status":"可预约","flag":"1","chosen":"0"}
+      var temp1 = {"time":"00-00","status":"可预约","flag":"1","chosen":"0","color":"bg-blue"}
       temp1.time = temp[i].start_time + "-" + temp[i].end_time; 
-      temp1.chosen = "0"
+      temp1.chosen = ""
       switch(this.data.currentIndex){
         case 0:{
           if(temp[i].todayState == "1")
           {
             temp1.status = "可预约"
             temp1.flag = "1"
+            temp1.color = "bg-blue"
+
           }
           else{
             temp1.status = "不可预约"
             temp1.flag = "0"
+            temp1.color = "bg-red"
           }
         };break;
         case 1:{
             if(temp[i].tomorrowState == "1"){
               temp1.status = "可预约";
               temp1.flag = "1";
+              temp1.color = "bg-blue"
             }else{
               temp1.status = "不可预约"
               temp1.flag = "0"
+              temp1.color = "bg-red"
             }
         };break;
         case 2:{
           if(temp[i].twoDayState == "1"){
             temp1.status = "可预约";
             temp1.flag = "1";
+            temp1.color = "bg-blue"
           }else{
             temp1.status = "不可预约"
             temp1.flag = "0"
+            temp1.color = "bg-red"
           }
         };break;
         case 3:{
           if(temp[i].threeDayState == "1"){
             temp1.status = "可预约";
             temp1.flag = "1";
+            temp1.color = "bg-blue"
           }else{
             temp1.status = "不可预约"
             temp1.flag = "0"
+            temp1.color = "bg-red"
           }
         };break;
         case 4:{
           if(temp[i].fourDayState == "1"){
             temp1.status = "可预约";
             temp1.flag = "1";
+            temp1.color = "bg-blue"
           }else{
             temp1.status = "不可预约"
             temp1.flag = "0"
+            temp1.color = "bg-red"
           }
         };break;
         case 5:{
           if(temp[i].fiveDayState == "1"){
             temp1.status = "可预约";
             temp1.flag = "1";
+            temp1.color = "bg-blue"
           }else{
             temp1.status = "不可预约"
             temp1.flag = "0"
+            temp1.color = "bg-red"
           }
         };break;
         case 6:{
           if(temp[i].sixDayState == "1"){
             temp1.status = "可预约";
             temp1.flag = "1";
+            temp1.color = "bg-blue"
           }else{
             temp1.status = "不可预约"
             temp1.flag = "0"
+            temp1.color = "bg-red"
           }
         };break;
         default:break;

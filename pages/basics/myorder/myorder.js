@@ -107,6 +107,7 @@ Page({
       header:getApp().globalData.header,
       dataType:'json',
       success:function(res){
+        console.log(res.data)
         that.setData({
           bookRecorders:res.data
         })
@@ -117,8 +118,8 @@ Page({
   DateChange(e) {
     this.setData({
       date1: e.detail.value
-    })
-    this.getRecoder()
+    });
+    this.getRecoderBy()
   },
   getPlaces() {
     var that = this

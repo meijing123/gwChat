@@ -36,17 +36,22 @@
  </scroll-view>
  </view>
 
-  <view class='time1'>
+  <view>
   <view wx:for="{{timeArr}}" wx:for-item="timeItem" wx:for-index="timeIndex"
-	 data-Tindex="{{timeIndex}}" data-time="{{timeItem.time}}" 
-	 bindtap='selectTime' class='listItem {{ currentTime==timeIndex? "current":"" }}'
-	 wx:key='timeIndex' wx:if="{{timeItem.flag == '1' && timeItem.chosen == '0'}}" >
-   <text>{{timeItem.time}}</text>
-   <text>{{timeItem.status}}</text>
+	 data-index="{{timeIndex}}" data-time="{{timeItem.time}}" 
+	 wx:key='timeIndex' >
+	   <view class="cu-bar bg-white solid-bottom">
+    <view class="action">
+      <text class="text-black"> {{timeItem.time}}</text>
+    </view>
+    <view class="action">
+      <button class="cu-btn {{timeItem.color}} round"  data-index="{{timeIndex}}" data-time="{{timeItem.time}}"
+	   bindtap='selectTime' disabled="{{timeItem.chosen}}">{{timeItem.status}}</button>
+    </view>
+  </view>
   </view>
 
  </view>
-
 
 	<view class="padding">
 		<button class="cu-btn block bg-blue margin-tb-sm lg" bindtap="submit">提交</button>
