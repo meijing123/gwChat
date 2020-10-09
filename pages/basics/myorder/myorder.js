@@ -107,7 +107,6 @@ Page({
       header:getApp().globalData.header,
       dataType:'json',
       success:function(res){
-        console.log(res.data)
         that.setData({
           bookRecorders:res.data
         })

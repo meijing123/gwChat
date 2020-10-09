@@ -2,6 +2,7 @@ Component({
   options: {
     addGlobalClass: true,
   },
+
   data: {
     elements: [{
         title: '我的行程',
@@ -32,6 +33,24 @@ Component({
     islg:false
   },
   methods: {
+    onShareAppMessage: function(res){
+      return {
+        title: "华新基地",
+        desc: "首页",
+        imageUrl:'../../../images/BasicsBg.png',
+        path: '/pages/basics/home/home',
+     
+        success: function (res) {
+          // 转发成功
+          console.log("转发成功:" + JSON.stringify(res));
+        },
+        fail: function (res) {
+          // 转发失败
+          console.log("转发失败:" + JSON.stringify(res));
+    
+      }
+    }
+    },
     islogin: function () {
     var flag = false;
     if (wx.getStorageSync("isLogin")) {
@@ -47,6 +66,7 @@ Component({
     pageLifetimes:{
     show:function(){
     this.islogin() 
+    this.onShareAppMessage()
     }
     }
 })

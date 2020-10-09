@@ -3,8 +3,8 @@ Page({
   data: {
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
-    place_index: 0,
-    teacher_index: 0,
+    place_index: null,
+    teacher_index: null,
     teachers: [],
     places: [],
     result: [],
@@ -382,7 +382,7 @@ Page({
 
 
   submit(e) {
-    if(this.data.teacher_index == 0){
+    if(this.data.teacher_index == null){
       wx.showToast({
         title: '选择教师',
         icon:'none',

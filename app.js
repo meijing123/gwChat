@@ -1,6 +1,11 @@
 //app.js
 App({   
   login:function(account,pwd){
+    if(account == null || account ==""){
+      wx.redirectTo({
+        url: '/pages/login/login',
+      })
+    }else{ 
   var that = this;
   wx.request({
     url: 'https://www.shutest.top/HXJD/WeChat/login',
@@ -32,7 +37,7 @@ App({
     
 
   })
-
+ }
 },
 
   onLaunch: function() {
