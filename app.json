@@ -5,7 +5,8 @@
     "pages/basics/order/order",
     "pages/basics/password/password",
     "pages/basics/myorder/myorder",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/basics/tool/tool"
   ],
   "window": {
     "navigationBarBackgroundColor": "#39b54a",
@@ -13,10 +14,8 @@
     "navigationStyle": "custom",
     "navigationBarTextStyle": "white",
     "enablePullDownRefresh": true,
-    "backgroundTextStyle":"dark"
-
+    "backgroundTextStyle": "dark"
   },
-
   "usingComponents": {
     "cu-custom": "/colorui/components/cu-custom"
   },

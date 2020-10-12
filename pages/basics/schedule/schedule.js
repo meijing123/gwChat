@@ -17,6 +17,7 @@ Page({
    */
   onLoad: function (options) {
     this.TodayDate()
+
   },
 
   /**

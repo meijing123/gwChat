@@ -35,14 +35,14 @@
 		<view class="bg-white padding">
 			<view class="cu-steps">
 				<view class="cu-item ">
-					<text class="cuIcon-usefullfill" ></text> {{recorder.date}}
+					 <text class="text-black" >{{recorder.date}} </text> 
 				</view>
 				<view class="cu-item">
-					<text class="cuIcon-usefullfill"></text> {{recorder.start_time+" "+"-"+" "+recorder.end_time}}
+				 <text class="text-black">{{recorder.start_time+" "+"-"+" "+recorder.end_time}}</text> 
 				</view>
 	
 				<view class="cu-item">
-					<text class="cuIcon-usefullfill"></text> {{recorder.operator}}
+					 <text class="text-black">{{recorder.operator}}</text>  
 				</view>
 			</view>
 		</view>

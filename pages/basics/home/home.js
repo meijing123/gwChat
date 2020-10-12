@@ -28,6 +28,12 @@ Component({
         name: 'myorder',
         color: 'red',
         icon: 'myfill'
+      },
+      {
+        title: '工具 ',
+        name: 'tool',
+        color: 'mauve',
+        icon: 'icon'
       }
     ],
     islg:false

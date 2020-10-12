@@ -2694,8 +2694,8 @@ scroll-view.cu-steps .cu-item {
 
 .cu-steps .cu-item {
 	flex: 1;
-	text-align: center;
-	position: relative;
+	 text-align: center;
+	/* position: relative;  */
 	min-width: 100rpx;
 }
 
