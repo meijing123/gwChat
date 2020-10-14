@@ -81,15 +81,66 @@ Page({
   },
   scan(e){
     var that = this
-    if(e.detail.userInfo){
+wx.getSetting({
+  success(res){
+    if(!res.authSetting['scope.camera']){
+      wx.authorize({
+        scope: 'scope.camera',
+        success(){
+          console.log("s")
+          that.scan();
+        },fail(){
+              wx.showToast({
+                title: '未授权',
+                duration:3000
+              })
+        }
+      })
+    }else{
+   
+ 
+      wx.scanCode({
+        scanType:['qrCode'],
+        success:function (res){
+          var data = res.result;
+          wx.showModal({
+            title:'提示',
+            content:'确认登录',
+            success(res){
+              if(res.confirm){
+                var url = data;
+                getApp().globalData.head.Cookie = url.split("?")[1];
+                wx.request({
+                  url: url.split("?")[0],
+                  method:'POST',
+                  header:getApp().globalData.head,
+                  data:{username:wx.getStorageSync('username'),password:wx.getStorageSync('password'),
+                  sessionid:getApp().globalData.head.Cookie.split("=")[1]},
+                  dataType:'json',
+                 success:function(res){
+                    if(res.data[0]  === "ok"){
+                      getApp().globalData.head.Cookie = ''
+                    }
+                  }
+                })
+              }else{
+                wx.redirectTo({
+                  url: '/pages/basics/tool/tool',
+                })
+              }
+            }
+          })
 
-    }
-    else{
-      wx.showToast({
-        title: '取消授权',
-        icon:'none',
-        duration:2000
+        }
       })
     }
+  }
+})
+
+
+
+
+   
+
   }
 })

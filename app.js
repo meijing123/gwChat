@@ -12,23 +12,22 @@ App({
     data:{username:account,password:pwd},
     dataType:'json',
     method:'POST',
-    header:getApp().globalData.header,
+    header:that.globalData.header,
     success:function(res){
 
       if(res.data.code == "ok"){
       wx.setStorageSync('username', account)
       wx.setStorageSync('password', pwd)
-        getApp().globalData.header.Cookie = "JSESSIONID="+ res.data.sessionId;
+      wx.setStorageSync('isLogin', true)
+
+      that.globalData.header.Cookie = "JSESSIONID="+ res.data.sessionId;
         wx.showToast({
           title: '登录成功',
         })
-        wx.setStorageSync('isLogin', true)
        
       }else{
-        wx.showModal({
-          title: '提示',
-          content: '未识别匹配的账号和密码',
-          showCancel: false
+        wx.redirectTo({
+          url: '/pages/login/login',
         })
       }
     },error:function(e){
@@ -41,6 +40,10 @@ App({
 },
 
   onLaunch: function() {
+    
+    var username = wx.getStorageSync('username')
+    var password = wx.getStorageSync('password')
+    this.login(username,password)
     // if (wx.cloud) {
     //   wx.cloud.init({
     //     traceUser: true
@@ -92,13 +95,17 @@ App({
 		}
       }
     })
+
   },
   globalData: {
   header:{
     "content-type": "application/x-www-form-urlencoded",
       'Cookie': ''
   },
-  openid:'',
+  head:{
+    "content-type": "application/x-www-form-urlencoded",
+    'Cookie': ''
+  },
     ColorList: [{
         title: '嫣红',
         name: 'red',
