@@ -2,17 +2,17 @@ const app = getApp();
 Page({
   data:{
     password:"无",
-    date:'2020-10-01',
-    start_time:'00:00',
-    end_time:'00:00',
-    time:'0',
-    reason:'无',
-    bz:'无'
+    startDate:"2020-10-01",
+    endDate: "2020-10-01",
+    startTime:"00:00",
+    endTime:"00:00",
+    time:"0",
+    reason:"无",
+    bz:"无",
+    bp: ["bp1", "bp2", "bp3"],
+    bpIndex: null
   },
   onPullDownRefresh:function(){
-    var username = wx.getStorageSync('username');
-    var password = wx.getStorageSync('password');
-    getApp().login(username,password);
     wx.stopPullDownRefresh();
   },
   onLoad:function(){
@@ -25,19 +25,29 @@ Page({
       password:password
     })
   },
-  DateChange(e) {
+  startDateChange(e) {
     this.setData({
-      date: e.detail.value
+      startDate: e.detail.value
     })
   },
-  start_timeChange(e){
+  endDateChange(e){
      this.setData({
-       start_time:e.detail.value
+       endDate: e.detail.value
      })
   },
-  end_timeChange(e){
+  bpChange(e){
+        this.setData({
+          bpIndex: e.detail.value
+        })
+  },
+  startTimeChange(e){
+     this.setData({
+       startTime:e.detail.value
+     })
+  },
+  endTimeChange(e){
     this.setData({
-      end_time:e.detail.value
+      endTime:e.detail.value
     })
   },
   useTimes(e){
@@ -63,43 +73,57 @@ submit(){
      icon:'none',
      duration:2000
    })
- } else if(!this.compareTime(this.data.start_time,this.data.end_time)){
+ } else if(!this.compareTime(this.data.startDate,this.data.startTime, this.data.endDate, this.data.endTime)){
    wx.showToast({
-     title: '时间间隔至少1小时',
+     title: '时间间隔至少1小时/开始日期应晚于结束日期',
      icon:'none',
      duration:2000
    })
- }else{
+ }else if(this.data.bpIndex === null){
+      wx.showToast({
+           title: '请选择班牌',
+           icon: 'none',
+           duration: 2000
+      })
+ }
+ else{
    wx.request({
-     url: 'https://www.shutest.top/HXJD/WeChat/saveCreatePassword',
+     url: 'https://www.shutest.top:8001/api/saveCreatePassword',
      data:{
        password:this.data.password,
-       usedate:this.data.date,
-       start_time:this.data.start_time,
-       end_time:this.data.end_time,
+       startDate:this.data.startDate,
+       endDate: this.data.endDate,
+       startTime:this.data.startTime,
+       endTime:this.data.endTime,
        time:this.data.time,
        reason:this.data.reason,
-       bz:this.data.bz
+       bz:this.data.bz,
+       bp: this.data.bp[this.data.bpIndex]
+       
       },
       method:'POST',
       header:getApp().globalData.header,
       dataType:'json',
       success:function(res){
-        if(res.data.code == "login"){
+         if(res.data.code == "200"){
+           if(res.data.message === ""){
+            wx.showToast({
+              title: '成功',
+              icon:'success',
+              duration:2000
+            })
+          }else{
+            wx.showToast({
+              title: '异常',
+              icon:'none',
+              duration:2000
+            })
+          }
+
+        }else{
           wx.showToast({
-            title: '登录后重试',
+            title: '网络异常',
             icon:'none',
-            duration:2000,
-            complete:function(){
-              wx.redirectTo({
-                url: '/pages/login/login',
-              })
-            }
-          })
-        }else if(res.data.code == "ok"){
-          wx.showToast({
-            title: '成功',
-            icon:'success',
             duration:2000
           })
         }
@@ -108,14 +132,27 @@ submit(){
  }
 },
 
- compareTime:function(start_time,end_time){
-  start_time = start_time.split(":")[0];
-  end_time = end_time.split(":")[0];
-  if(parseInt(end_time) - parseInt(start_time)>=1){
-    return true;
+ compareTime:function(startD,startT,endD, endT){
+  let startDateTemp = startD.split("-");
+  let endDateTemp = endD.split("-");
+  let startDate = parseInt(startDateTemp[0]+startDateTemp[1]+startDateTemp[2]);
+  let endDate = parseInt(endDateTemp[0]+endDateTemp[1]+endDateTemp[2]);
+  if( startDate === endDate ){
+    let startTime = startT.split(":")[0];
+    let endTime = endT.split(":")[0];
+    if(parseInt(endTime) - parseInt(startTime)>=1){
+      return true;
+    }else {
+      return false;
+    }
   }else {
-    return false;
+    if(startDate > endDate){
+      return false;
+    }else{
+      return true;
+    }
   }
+
 },
 
 
@@ -131,7 +168,8 @@ submit(){
     var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate(); 
     var today = Y + "-" + M + "-" + D;
     this.setData({
-     date:today
+      startDate:today,
+      endDate:today
     })
   },
 });

@@ -1,4 +1,5 @@
 // pages/login/login.js
+import jwt from "../../weapp-jwt";
 const app=getApp();
 Page({
 
@@ -88,18 +89,18 @@ Page({
   login:function(e){
     var that = this;
     wx.request({
-      url: 'https://www.shutest.top/HXJD/WeChat/login',
-      data:{username:that.data.account,password:that.data.password},
+      url: 'https://www.shutest.top:8001/api/login',
+      data:{telephone:that.data.account,password:that.data.password},
       dataType:'json',
       method:'POST',
-      header:getApp().globalData.header,
       success:function(res){
-
-       
-        if(res.data.code == "ok"){
-        wx.setStorageSync('username', that.data.account)
-        wx.setStorageSync('password', that.data.password)
-          getApp().globalData.header.Cookie = "JSESSIONID="+ res.data.sessionId;
+        if(res.data.code == "200"){
+        wx.setStorageSync('Authorization', res.data.data)
+          getApp().globalData.header.Authorization = res.data.data;
+          let temp = jwt(res.data.data)
+          wx.setStorageSync('id', temp.id);
+          wx.setStorageSync('name', temp.name);
+          wx.setStorageSync('isLogin', true);
           wx.showToast({
             title: '登录成功',
           })

@@ -1,43 +1,5 @@
 //app.js
 App({   
-  login:function(account,pwd){
-    if(account == null || account ==""){
-      wx.redirectTo({
-        url: '/pages/login/login',
-      })
-    }else{ 
-  var that = this;
-  wx.request({
-    url: 'https://www.shutest.top/HXJD/WeChat/login',
-    data:{username:account,password:pwd},
-    dataType:'json',
-    method:'POST',
-    header:that.globalData.header,
-    success:function(res){
-
-      if(res.data.code == "ok"){
-      wx.setStorageSync('username', account)
-      wx.setStorageSync('password', pwd)
-      wx.setStorageSync('isLogin', true)
-
-      that.globalData.header.Cookie = "JSESSIONID="+ res.data.sessionId;
-        wx.showToast({
-          title: '登录成功',
-        })
-       
-      }else{
-        wx.redirectTo({
-          url: '/pages/login/login',
-        })
-      }
-    },error:function(e){
-      console.log(e)
-    }
-    
-
-  })
- }
-},
 
   onLaunch: function() {
     wx.getSystemInfo({
@@ -52,10 +14,6 @@ App({
 		}
       }
     })
-    
-    var username = wx.getStorageSync('username')
-    var password = wx.getStorageSync('password')
-    this.login(username,password)
     // if (wx.cloud) {
     //   wx.cloud.init({
     //     traceUser: true
@@ -100,12 +58,7 @@ App({
   },
   globalData: {
   header:{
-    "content-type": "application/x-www-form-urlencoded",
-      'Cookie': ''
-  },
-  head:{
-    "content-type": "application/x-www-form-urlencoded",
-    'Cookie': ''
+    "Authorization": "",
   },
     ColorList: [{
         title: '嫣红',

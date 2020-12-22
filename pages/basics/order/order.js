@@ -4,8 +4,7 @@ Page({
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
     place_index: null,
-    teacher_index: null,
-    teachers: [],
+    teacherName: "",
     places: [],
     result: [],
     calendar: [],
@@ -20,7 +19,6 @@ Page({
   onLoad: function (options) {
     wx.removeStorageSync('bookTable');
     var that = this
-    this.getTeachers();
     this.getPlaces();
     this.getTimes();
     this.TodayDate();
@@ -82,15 +80,11 @@ Page({
    })
   },
   onPullDownRefresh:function(){
-    var username = wx.getStorageSync('username');
-    var password = wx.getStorageSync('password');
-    getApp().login(username,password);
     wx.stopPullDownRefresh();
   },
  
   select:function(event){
-
-    
+    wx.removeStorageSync("bookTable");
     //为上半部分的点击事件
     this.setData({
      currentIndex: event.currentTarget.dataset.index,
@@ -100,6 +94,7 @@ Page({
 
    },
    selectTime:function(event){
+
      var that = this
     //为下半部分的点击事件 
     this.setData({
@@ -136,9 +131,9 @@ Page({
             timeArr:that.data.timeArr
           }) 
        
-            var temp = {"start_time":"00:00","end_time":"00:00"};
-            temp.start_time = that.data.temp_booktime[that.data.currentTime].start_time;
-            temp.end_time  = that.data.temp_booktime[that.data.currentTime].end_time;
+            var temp = {"startTime":"00:00","endTime":"00:00"};
+            temp.startTime = that.data.temp_booktime[that.data.currentTime].startTime;
+            temp.endTime  = that.data.temp_booktime[that.data.currentTime].endTime;
             temp_result.push(temp)
             wx.setStorageSync('bookTable',temp_result);
         
@@ -166,6 +161,7 @@ Page({
   },
   
   placeChange(e) {
+    wx.removeStorageSync("bookTable");
     this.setData({
       place_index: e.detail.value
     });
@@ -174,14 +170,14 @@ Page({
   getPalceBook(){
     var that = this
     wx.request({
-      url: 'https://www.shutest.top/HXJD/WeChat/getBook',
-      data:{place_name:this.data.places[this.data.place_index].name},
+      url: 'https://www.shutest.top:8001/api/getBookTable',
+      data:{placeName:this.data.places[this.data.place_index]},
       header:getApp().globalData.header,
       method:'POST',
       dataType:'json',
       success:function(res){
         that.setData({
-          result:res.data
+          result:res.data.data
         })
         that.showBook();
         
@@ -189,9 +185,9 @@ Page({
     });
   },
 
-  teacherChange(e) {
+  teacherName(e) {
     this.setData({
-      teacher_index: e.detail.value
+      teacherName: e.detail.value
     })
 
   },
@@ -204,43 +200,44 @@ Page({
 
   },
 
-  getTeachers: function () {
-    var temp = []
-    var that = this
-    wx.request({
-      url: 'https://www.shutest.top/HXJD/WeChat/getTeacher',
-      header: getApp().globalData.header,
-      dataType: 'json',
-      success: function (res) {
-        that.setData({
-          teachers: []
-        })
-        for (var i = 0; i < res.data.length; i++) {
-          temp.push(res.data[i])
-        }
-        that.setData({
-          teachers: temp
-        })
-      },
-      error: function (e) {
-        console.log(e)
-      }
-    })
-  },
+  // getTeachers: function () {
+  //   var temp = []
+  //   var that = this
+  //   wx.request({
+  //     url: 'https://www.shutest.top/HXJD/WeChat/getTeacher',
+  //     header: getApp().globalData.header,
+  //     dataType: 'json',
+  //     success: function (res) {
+  //       that.setData({
+  //         teachers: []
+  //       })
+  //       for (var i = 0; i < res.data.length; i++) {
+  //         temp.push(res.data[i])
+  //       }
+  //       that.setData({
+  //         teachers: temp
+  //       })
+  //     },
+  //     error: function (e) {
+  //       console.log(e)
+  //     }
+  //   })
+  // },
 
   getPlaces() {
     var that = this
     var temp = []
     wx.request({
-      url: 'https://www.shutest.top/HXJD/WeChat/getPlace',
+      url: 'https://www.shutest.top:8001/api/getPlaceName',
       header: getApp().globalData.header,
       dataType: 'json',
+      method: 'POST',
       success: function (res) {
         that.setData({
           places: []
         })
-        for (var i = 0; i < res.data.length; i++) {
-          temp.push(res.data[i])
+        for (let i = 0; i < res.data.data.length; i++) {
+          temp.push(res.data.data[i])
         }
         that.setData({
           places: temp
@@ -254,16 +251,16 @@ Page({
     var that = this
    var temp1 = []
     wx.request({
-      url: 'https://www.shutest.top/HXJD/WeChat/getBookTime',
+      url: 'https://www.shutest.top:8001/api/getAllTime',
       header:getApp().globalData.header,
       dataType:'json',
       success:function(res){
         that.setData({
-          temp_booktime:res.data
+          temp_booktime:res.data.data
         })
-        for(var i = 0; i < res.data.length; i++){
+        for(var i = 0; i < res.data.data.length; i++){
           var temp = {"time":"00-00","status":"不可预约","flag":"0","chosen":"","color":"bg-blue"}
-          temp.time = res.data[i].start_time+" "+"-"+" "+res.data[i].end_time
+          temp.time = res.data.data[i].startTime+" "+"-"+" "+res.data.data[i].endTime
           temp.status  = "可预约"
           temp.flag = "1"
           temp.chosen = ""
@@ -287,11 +284,11 @@ Page({
  
     for(var i = 0; i<temp.length; i++){
       var temp1 = {"time":"00-00","status":"可预约","flag":"1","chosen":"0","color":"bg-blue"}
-      temp1.time = temp[i].start_time + "-" + temp[i].end_time; 
+      temp1.time = temp[i].startTime + "-" + temp[i].endTime; 
       temp1.chosen = ""
       switch(this.data.currentIndex){
         case 0:{
-          if(temp[i].todayState == "1")
+          if(temp[i].today == "1")
           {
             temp1.status = "可预约"
             temp1.flag = "1"
@@ -305,7 +302,7 @@ Page({
           }
         };break;
         case 1:{
-            if(temp[i].tomorrowState == "1"){
+            if(temp[i].oneDay == "1"){
               temp1.status = "可预约";
               temp1.flag = "1";
               temp1.color = "bg-blue"
@@ -316,7 +313,7 @@ Page({
             }
         };break;
         case 2:{
-          if(temp[i].twoDayState == "1"){
+          if(temp[i].twoDay == "1"){
             temp1.status = "可预约";
             temp1.flag = "1";
             temp1.color = "bg-blue"
@@ -327,7 +324,7 @@ Page({
           }
         };break;
         case 3:{
-          if(temp[i].threeDayState == "1"){
+          if(temp[i].threeDay == "1"){
             temp1.status = "可预约";
             temp1.flag = "1";
             temp1.color = "bg-blue"
@@ -338,7 +335,7 @@ Page({
           }
         };break;
         case 4:{
-          if(temp[i].fourDayState == "1"){
+          if(temp[i].fourDay == "1"){
             temp1.status = "可预约";
             temp1.flag = "1";
             temp1.color = "bg-blue"
@@ -349,7 +346,7 @@ Page({
           }
         };break;
         case 5:{
-          if(temp[i].fiveDayState == "1"){
+          if(temp[i].fiveDay == "1"){
             temp1.status = "可预约";
             temp1.flag = "1";
             temp1.color = "bg-blue"
@@ -360,7 +357,7 @@ Page({
           }
         };break;
         case 6:{
-          if(temp[i].sixDayState == "1"){
+          if(temp[i].sixDay == "1"){
             temp1.status = "可预约";
             temp1.flag = "1";
             temp1.color = "bg-blue"
@@ -382,7 +379,7 @@ Page({
 
 
   submit(e) {
-    if(this.data.teacher_index == null){
+    if(this.data.teacherName === ""){
       wx.showToast({
         title: '选择教师',
         icon:'none',
@@ -406,46 +403,54 @@ Page({
           }else{
           
            for(var i = 0; i<temp.length; i++){
-            var  temp1 = {"start_time":"00:00","end_time":"00:00","date":"0000-00-00","tele_num":"12345678901","place_name":"场地"}
-            temp1.start_time = temp[i].start_time;
-            temp1.end_time = temp[i].end_time;
+            var  temp1 = {"startTime":"00:00","endTime":"00:00",
+                          "date":"0000-00-00","operatorId":"12",
+                          "placeName":"场地", "operator": "admin",
+                          "teacher":"teacher"
+                        }
+            temp1.startTime = temp[i].startTime;
+            temp1.endTime = temp[i].endTime;
             temp1.date = that.data.date1;
-            temp1.tele_num = that.data.teachers[that.data.teacher_index].tele_num;
-            temp1.place_name = that.data.places[that.data.place_index].name
+            temp1.operatorId = wx.getStorageSync('id');
+            temp1.placeName = that.data.places[that.data.place_index];
+            temp1.operator = wx.getStorageSync('name');
+            temp1.teacher = that.data.teacherName;
             result_temp.push(temp1) 
            } 
            wx.request({
-             url: 'https://www.shutest.top/HXJD/WeChat/saveBookRecorder',
+             url: 'https://www.shutest.top:8001/api/saveBookTable',
              data:result_temp,
              dataType:'json',
              method:'POST',
-             header:{"content-type":"application/json",
-                     "Cookie":getApp().globalData.header.Cookie},
+             header:getApp().globalData.header,
              success:function(res){
               
-            if(res.data.code == "login"){
+            if(res.data.message == "error"){
               wx.showToast({
                 title: '断开连接，请刷新',
                 icon:'none',
                 duration:2000
               })
-            }else if(res.data.code == "exist"){
+            }else if(res.data.message == "exist"){
               wx.removeStorageSync('bookTable');
               wx.showToast({
                 title: '预约冲突，请切换日期重试',
                 icon:'none',
                 duration:2000
               })
-            }else if(res.data.code == "success"){
-              wx.removeStorageSync('bookTable');
-              wx.showToast({
-                title: '预约成功',
-                icon:'success',
-                duration:2000
-              })
-          
-              that.getPalceBook()
+            }else if(res.data.code == "200"){
+              if(res.data.message === ""){
+                wx.removeStorageSync('bookTable');
+                wx.showToast({
+                  title: '预约成功',
+                  icon:'success',
+                  duration:2000
+                })
             
+                that.getPalceBook()
+              }
+
+          
             }else{
               wx.showToast({
                 title: '异常，重试',

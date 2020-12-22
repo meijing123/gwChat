@@ -4,14 +4,6 @@ Page({
       date: "2020-09-01",
       textareaAValue: ''
   },
-
-    onPullDownRefresh:function(){
-      var username = wx.getStorageSync('username');
-      var password = wx.getStorageSync('password');
-      getApp().login(username,password)
-      wx.stopPullDownRefresh()
-  
-  },
     /**
    * 生命周期函数--监听页面加载
    */
@@ -90,15 +82,18 @@ Page({
   },
   submit(e){
     wx.request({
-      url: 'https://www.shutest.top/HXJD/WeChat/saveSchedule',
-      data:{date:this.data.date,text:this.data.textareaAValue},
+      url: 'https://www.shutest.top:8001/api/saveSchedule',
+      data:{
+           select_date:this.data.date,
+           schedule:this.data.textareaAValue,
+           name: wx.getStorageSync('name'),
+           id: wx.getStorageSync('id')
+      },
       method:'POST',
       header:getApp().globalData.header,
       dataType:'json',
       success:function(res){
-  
-        
-        if(res.data.code == "login"){
+        if(res.data.message == "error"){
           wx.showToast({
             title: '超时重新登录',
             icon:'none',
@@ -109,20 +104,22 @@ Page({
              })
            }
           })
-        }else if(res.data.code == "ok"){
-          wx.showToast({
-            title: '成功',
-            icon:'success',
-            duration:2000
-          })
-        }else{
-          wx.showToast({
-            title: '出错',
-            icon:'none',
-            duration:2000
-          })
-        }
+        }else if(res.data.code == "200"){
+          if(res.data.message === ""){
+            wx.showToast({
+              title: '成功',
+              icon:'success',
+              duration:2000
+            })
+          }else{
+            wx.showToast({
+              title: '出错',
+              icon:'none',
+              duration:2000
+            })
+          }
 
+        }
       },error:function(e){
         console.log(e)
       }

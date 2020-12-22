@@ -6,9 +6,9 @@
 	<form>
 		<view class="cu-form-group margin-top ">
 			<view class="title">场地选择</view>
-			<picker bindchange="placeChange" value="{{place_index}}" range="{{places}}" range-key="name">
+			<picker bindchange="placeChange" value="{{place_index}}" range="{{places}}">
 				<view class="picker">
-					{{place_index?places[place_index].name:'场地选择'}}
+					{{place_index?places[place_index]:'场地选择'}}
 				</view>
 			</picker>
 		</view>
@@ -23,22 +23,22 @@
 	</form>
 
 
-	<view wx:for="{{bookRecorders}}" wx:for-item="recorder" wx:for-index="Index" data-index="{{Index}}" data-id="{{recorder.id}}" data-operator="{{recorder.operator}}" class='margin-top' wx:key='Index'>
+	<view wx:for="{{bookRecorders}}" wx:for-item="recorder" wx:for-index="Index" data-index="{{Index}}" data-id="{{recorder.id}}" data-operatorId="{{recorder.operatorId}}" class='margin-top' wx:key='Index'>
 		<view class="cu-bar bg-white solid-bottom">
 			<view class="action">
-				<text class="title text-orange">{{recorder.name}}</text>
+				<text class="title text-orange">{{recorder.placeName}}</text>
 			</view>
 			<view class="action">
-				<button class="cu-btn bg-red shadow" data-id="{{recorder.id}}" data-operator="{{recorder.operator}}"  data-index="{{Index}}" bindtap="del">取消</button>
+				<button class="cu-btn bg-red shadow" data-id="{{recorder.id}}" data-operatorId="{{recorder.operatorId}}"  data-index="{{Index}}" bindtap="del">取消</button>
 			</view>
 		</view>
 		<view class="bg-white padding">
 			<view class="cu-steps">
 				<view class="cu-item ">
-					 <text class="text-black" >{{recorder.date}} </text> 
+					 <text class="text-black" >{{recorder.orderDate}} </text> 
 				</view>
 				<view class="cu-item">
-				 <text class="text-black">{{recorder.start_time+" "+"-"+" "+recorder.end_time}}</text> 
+				 <text class="text-black">{{recorder.startTime+" "+"-"+" "+recorder.endTime}}</text> 
 				</view>
 	
 				<view class="cu-item">

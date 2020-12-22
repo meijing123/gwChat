@@ -69,8 +69,6 @@ Page({
         content:'确认退出',
         success (res){
           if(res.confirm){
-            wx.removeStorageSync('username');
-            wx.removeStorageSync('password');
             wx.removeStorageSync('isLogin');
             wx.redirectTo({
               url: '/pages/login/login',
