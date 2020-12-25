@@ -18,7 +18,6 @@ Page({
   onLoad: function (options) {
     this.TodayDate()
     this.getPlaces().then(res => {
-      console.log(res)
       let temp = []
       this.setData({
         places: []

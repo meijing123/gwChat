@@ -58,7 +58,7 @@ App({
   },
   globalData: {
   header:{
-    "Authorization": "",
+    "Authorization": wx.getStorageSync('Authorization')
   },
     ColorList: [{
         title: '嫣红',

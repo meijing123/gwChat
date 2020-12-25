@@ -85,7 +85,6 @@ wx.getSetting({
       wx.authorize({
         scope: 'scope.camera',
         success(){
-          console.log("s")
           that.scan();
         },fail(){
               wx.showToast({
@@ -106,18 +105,33 @@ wx.getSetting({
             content:'确认登录',
             success(res){
               if(res.confirm){
-                var url = data;
-                getApp().globalData.head.Cookie = url.split("?")[1];
+                let uuid = data;
                 wx.request({
-                  url: url.split("?")[0],
+                  url: 'https://www.shutest.top:8001/api/updateToken' ,
                   method:'POST',
-                  header:getApp().globalData.head,
-                  data:{username:wx.getStorageSync('username'),password:wx.getStorageSync('password'),
-                  sessionid:getApp().globalData.head.Cookie.split("=")[1]},
-                  dataType:'json',
+                  header:getApp().globalData.header,
+                  data:{uuid:uuid,token:wx.getStorageSync('Authorization')},
                  success:function(res){
-                    if(res.data[0]  === "ok"){
-                      getApp().globalData.head.Cookie = ''
+                    if(res.data.code  === 200){
+                       if(res.data.message === ""){
+                         wx.showToast({
+                           title: '登录成功',
+                           icon: 'success',
+                           duration:2000
+                         })
+                       }else{
+                        wx.showToast({
+                          title: '登录失败',
+                          icon: 'none',
+                          duration:2000
+                        })
+                       }
+                    }else{
+                      wx.showToast({
+                        title: '网络异常',
+                        icon: 'none',
+                        duration:2000
+                      })
                     }
                   }
                 })
