@@ -98,9 +98,9 @@ Page({
         wx.setStorageSync('Authorization', res.data.data)
           getApp().globalData.header.Authorization = res.data.data;
           let temp = jwt(res.data.data)
-          console.log(temp)
           wx.setStorageSync('id', temp.id);
           wx.setStorageSync('name', temp.name);
+          wx.setStorageSync('role', temp.role);
           wx.setStorageSync('isLogin', true);
           wx.showToast({
             title: '登录成功',

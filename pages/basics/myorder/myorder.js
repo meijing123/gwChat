@@ -173,7 +173,7 @@ Page({
       content: '确认删除',
       success(res) {
         if (res.confirm) {
-          if (operatorId === wx.getStorageSync('id')) {
+          if (operatorId === wx.getStorageSync('id') || wx.getStorageSync('role') === "0") {
             wx.request({
               url: 'https://www.shutest.top:8001/api/deleteOrder',
               data: {
