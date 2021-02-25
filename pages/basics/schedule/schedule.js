@@ -84,7 +84,7 @@ Page({
     wx.request({
       url: 'https://www.shutest.top:8001/api/saveSchedule',
       data:{
-           select_date:this.data.date,
+           selectDate:this.data.date,
            schedule:this.data.textareaAValue,
            name: wx.getStorageSync('name'),
            id: wx.getStorageSync('id')
@@ -93,35 +93,21 @@ Page({
       header:getApp().globalData.header,
       dataType:'json',
       success:function(res){
-        if(res.data.message == "error"){
-          wx.showToast({
-            title: '超时重新登录',
-            icon:'none',
-            duration:2000,
-           complete:function(){
-             wx.redirectTo({
-               url: '/pages/login/login',
-             })
-           }
-          })
-        }else if(res.data.code == "200"){
-          if(res.data.message === ""){
+        console.log(res)
+         if(res.data.code == "ok"){
             wx.showToast({
               title: '成功',
               icon:'success',
               duration:2000
             })
-          }else{
-            wx.showToast({
-              title: '出错',
-              icon:'none',
-              duration:2000
-            })
-          }
-
+        
+        }else{
+          wx.showToast({
+            title: '出错',
+            icon:'none',
+            duration:2000
+          })
         }
-      },error:function(e){
-        console.log(e)
       }
 
     })

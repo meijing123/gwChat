@@ -6,7 +6,7 @@ Page({
     endDate: "2020-10-01",
     startTime:"00:00",
     endTime:"00:00",
-    time:"0",
+    time:"999999",
     reason:"无",
     bz:"无",
     bp: ["bp1", "bp2", "bp3"],
